@@ -1,26 +1,44 @@
-import React, { FC, useState } from "react";
-import styled from "styled-components";
-import { v1 } from "uuid";
+import { FC, useState } from "react";
+import { PostType } from "../../..";
+import CustomInput from "../../../component/CustomInput";
 import Post from "./Post/Post";
 
-export type MessagesType = {
-  id: string
-  message: string
-  index?: number
+export interface MessagesType extends PostType {
+  index?: number;
 }
 
-const MyPosts: FC = () => {
+type MyPostsProps = {
+  initialPosts: PostType[];
+};
 
-  let [posts, setPosts] = useState<MessagesType[]>([
-    { id: v1(), message: "asd1" },
-    { id: v1(), message: "asd2" },
-    { id: v1(), message: "asd3" },
-    { id: v1(), message: "asd4" },
-  ]);
+const MyPosts: FC<MyPostsProps> = ({ initialPosts }) => {
+  let [posts, setPosts] = useState<PostType[]>(initialPosts);
+
+  const addPost = (text: string) => {
+    if (text.trim()==='') {
+      return;
+    }
+    const newPost = {
+      id: Date.now().toString(),
+      message: text,
+      likesCount: 0
+    };
+    setPosts([...posts, newPost]);
+  };
 
   return (
     <div>
-      {posts.map((post, index)=><Post key={post.id} message={post.message} id={post.id} index={index+1}/>)}
+      {posts.map((post, index) => (
+        <Post
+          key={post.id}
+          message={post.message}
+          id={post.id}
+          index={index + 1}
+          likesCount={post.likesCount}
+        />
+      ))}
+
+      <CustomInput postFunc={addPost} />
     </div>
   );
 };

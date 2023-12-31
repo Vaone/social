@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import { FC } from "react";
 import styled from "styled-components";
-import { Container } from "./component/Container";
-import CusomInput from "./component/CusomInput";
 import Header from "./layout/Header";
 import Nav from "./layout/Nav";
 import Main from "./layout/Main";
 import Profile from "./pages/Profile/Profile";
 import Dialogs from "./pages/Dialogs/Dialogs";
 import { BrowserRouter, Route } from "react-router-dom";
+import { stateType } from ".";
 
-function App() {
+type AppPropsType = {
+  state: stateType
+}
+
+const App:FC<AppPropsType> = ({state}) => {
   return (
     <BrowserRouter>
       <div className="App">
@@ -18,9 +21,8 @@ function App() {
           <StyledMain>
             <Nav />
             <Main>
-              {/* <MyPosts /> */}
-              <Route path='/profile' component={Profile}/>
-              <Route path='/dialogs' component={Dialogs}/>
+              <Route path='/profile' render={()=> <Profile state={state.ProfilePage}/>}/>
+              <Route path='/dialogs' render={()=> <Dialogs state={state.DialogsPage}/>}/>
             </Main>
           </StyledMain>
         </Wrapper>
@@ -32,7 +34,6 @@ function App() {
 export default App;
 
 const Wrapper = styled.div`
-  /* width: 100%; */
   display: flex;
   flex-direction: column;
   height: 100vh;

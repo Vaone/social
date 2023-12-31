@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import { message0 } from "../DialogWindow";
+import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { message0 } from "../../../../state/state";
+import { MessageType } from "../../../../state/state";
 import s from "./MessageSender.module.css";
+import Message from '../message/Message'
 
-// компонента, которая тестирует вашу компоненту (не изменять, any не трогать)
-const MessageSender = (props: any) => {
-  const M = props.M;
+
+const MessageSender = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [messages, setMessages] = useState<any[]>([]);
-  const [text, setText] = useState<any>("");
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [text, setText] = useState<string>("");
 
-  const onChange = (e: any) => {
-    setText(e.currentTarget.value);
+  const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setText(event.currentTarget.value);
   };
 
   useEffect(() => {
@@ -36,14 +37,14 @@ const MessageSender = (props: any) => {
     setTimeout(() => setText(""), 4);
   };
 
-  const onKeyDown = (e: any) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     e.key === "Enter" && e.shiftKey && addMessage();
   };
 
   return (
     <>
       {messages.map((m) => (
-        <M key={"message" + m.id} message={m} />
+        <Message key={"message" + m.id} message={m} />
       ))}
 
       <div className={s.sendForm}>

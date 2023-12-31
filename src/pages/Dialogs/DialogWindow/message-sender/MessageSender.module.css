@@ -11,7 +11,6 @@
   min-height: 45px;
   margin-right: 44px;
   overflow-y: hidden;
-
   border-radius: 20px;
   padding: 12px 24px;
 
@@ -37,10 +36,11 @@
   font-weight: 600;
   line-height: 20px;
   letter-spacing: 0em;
+  cursor: pointer;
 }
 
 .button:hover {
-
+  background-color: #0152a3;
 }
 .button:active {
 

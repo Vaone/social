@@ -1,8 +1,12 @@
-import React, { FC } from "react";
-import styled from "styled-components";
+import { FC } from "react";
+import { ProfilePageType } from "../..";
 import MyPosts from "./MyPosts/MyPosts";
 
-const Profile: FC = ({ children }) => {
+type ProfilePropsType = {
+  state: ProfilePageType
+}
+
+const Profile: FC<ProfilePropsType> = ({ state, ...children }) => {
   return (
     <div>
       <p>Background</p>
@@ -27,7 +31,7 @@ const Profile: FC = ({ children }) => {
         quos, a ab commodi quisquam explicabo rerum. Veritatis tempore adipisci
         enim nam doloribus temporibus iusto illum suscipit provident!
       </p>
-      <MyPosts />
+      <MyPosts initialPosts={state.posts}/>
     </div>
   );
 };

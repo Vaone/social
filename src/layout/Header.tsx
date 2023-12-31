@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Header: FC = ({}) => {
   return (
-      <StyledHeader>s</StyledHeader>
+      <StyledHeader>Header</StyledHeader>
   )
 };
 

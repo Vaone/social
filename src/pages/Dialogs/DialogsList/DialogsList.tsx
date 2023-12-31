@@ -1,25 +1,36 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
-import { StyledNavLink } from '../../../layout/Nav';
+import React, { FC } from "react";
+import { NavLink } from "react-router-dom";
+import styled from "styled-components";
+import { DialogsListItem } from "../../..";
+import { StyledNavLink } from "../../../layout/Nav";
 
-const DialogsList = ({}) => {
+type dialogsListItem = {
+  id: string;
+  name: string;
+};
+
+type DialogsListProps = {
+  dialogsUserList: dialogsListItem[];
+};
+
+const DialogsList: FC<DialogsListProps> = ({ dialogsUserList }) => {
   return (
     <StyledDialogList>
-      <StyledNavLink to='/dialogs/kolya' >Коля</StyledNavLink>
-      <StyledNavLink to='/dialogs/petya' >Петя</StyledNavLink>
-      <StyledNavLink to='/dialogs/vasya' >Вася</StyledNavLink>
-      <StyledNavLink to='/dialogs/vanya' >Ваня</StyledNavLink>
+      {dialogsUserList.map((e) => (
+        <StyledNavLink key={e.id} to={"/dialogs/" + e.id}>
+          {e.name}
+        </StyledNavLink>
+      ))}
     </StyledDialogList>
-  )
+  );
 };
 
 export default DialogsList;
 
 const StyledDialogList = styled.div`
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   flex-direction: column;
   min-width: 300px;
-`
+  padding: 10px;
+  border-right: 1px blue solid;
+`;

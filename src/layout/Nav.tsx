@@ -37,8 +37,12 @@ const StyledNav = styled.nav`
 `;
 
 export const StyledNavLink = styled(NavLink)`
+display: flex;
+padding: 10px;
+border-radius: 5px;
   color: #646464;
   &.active {
     color: #001aff;
+    background-color: #001aff3e;
   }
 `

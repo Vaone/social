@@ -21,7 +21,7 @@ const StyledSection = styled.section`
   width: 100%;
   padding: 5rem 3.33333rem 0 20rem;
 
-  div {
+  &>div {
     width: 100%;
     padding: 10px;
   }
