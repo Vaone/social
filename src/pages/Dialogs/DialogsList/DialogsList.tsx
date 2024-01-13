@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { DialogsListItem } from "../../..";
+import { DialogsListItem } from "../../../state/state";
 import { StyledNavLink } from "../../../layout/Nav";
 
 type dialogsListItem = {

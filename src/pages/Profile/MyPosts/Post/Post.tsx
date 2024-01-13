@@ -5,7 +5,7 @@ import { MessagesType } from "../MyPosts";
 const Post: FC<MessagesType> = ({ id, message, likesCount, ...props }) => {
   return (
     <StyledPost>
-      {props.index}.{message}
+      {props.index}. {message}
       <StyledLikes>
         <span>{likesCount}</span>
       </StyledLikes>

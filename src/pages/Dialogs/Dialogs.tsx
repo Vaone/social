@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import DialogsList from "./DialogsList/DialogsList";
 import styled from "styled-components";
 import DialogWindow from "./DialogWindow/DialogWindow";
-import { DialogsPageType } from "../..";
+import { DialogsPageType } from "../../state/state";
 import { Route } from "react-router-dom";
 
 type DialogsProps = {

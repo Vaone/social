@@ -2,37 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { GlobalStyle } from "./styles/Global.styled";
-import { MessageType, state } from "./state/state";
+import { store } from "./state/state";
 
-export type PostType = {
-  id: string;
-  message: string;
-  likesCount: number
-};
-
-export type ProfilePageType = {
-  posts: PostType[];
-};
-
-export type DialogsListItem = {
-  id: string,
-  name: string,
-  messagesList: MessageType[]
+export const renderTree = () => {
+  ReactDOM.render(
+    <>
+      <App state={store.getState()} 
+          dispatch={store.dispatch.bind(store)} />
+      <GlobalStyle />
+    </>,
+    document.getElementById("root")
+  );
 }
 
-export type DialogsPageType = {
-  dialogsList: DialogsListItem[]
-}
+store.subscribe(renderTree)
 
-export type stateType = {
-  ProfilePage: ProfilePageType
-  DialogsPage: DialogsPageType
-};
-
-ReactDOM.render(
-  <>
-    <App state={state} />
-    <GlobalStyle />
-  </>,
-  document.getElementById("root")
-);
+renderTree()

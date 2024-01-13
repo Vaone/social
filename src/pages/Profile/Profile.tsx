@@ -1,12 +1,13 @@
 import { FC } from "react";
-import { ProfilePageType } from "../..";
+import { ActionsTypes, ProfilePageType } from "../../state/state";
 import MyPosts from "./MyPosts/MyPosts";
 
 type ProfilePropsType = {
-  state: ProfilePageType
+  state: ProfilePageType,
+  dispatch: (action: ActionsTypes)=>void,
 }
 
-const Profile: FC<ProfilePropsType> = ({ state, ...children }) => {
+const Profile: FC<ProfilePropsType> = ({ state, dispatch, ...children }) => {
   return (
     <div>
       <p>Background</p>
@@ -31,7 +32,7 @@ const Profile: FC<ProfilePropsType> = ({ state, ...children }) => {
         quos, a ab commodi quisquam explicabo rerum. Veritatis tempore adipisci
         enim nam doloribus temporibus iusto illum suscipit provident!
       </p>
-      <MyPosts initialPosts={state.posts}/>
+      <MyPosts state={state} dispatch={dispatch}/>
     </div>
   );
 };
