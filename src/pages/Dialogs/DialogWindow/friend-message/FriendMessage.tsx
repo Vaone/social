@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { MessageType } from "../../../../state/state";
+import { MessageType } from "../../../../redux/store";
 import s from "./FriendMessage.module.css";
 
 type FriendMessageProps = {

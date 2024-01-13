@@ -1,3 +1,4 @@
+import { ActionsTypes, profilePageReducer } from './profilePage-reducer';
 import avatar from "../pages/Dialogs/DialogWindow/avatar.png";
 import avatar2 from "../pages/Dialogs/DialogWindow/avatar2.png";
 
@@ -36,35 +37,17 @@ export type stateType = {
   ProfilePage: ProfilePageType
   DialogsPage: DialogsPageType
 };
-// export type ActionType = AddPostActionType | ChangePostInputType
-// type AddPostActionType = {
-//   type: 'ADD-POST'
-// };
-// type ChangePostInputType = {
-//   type: 'CHANGE-POST-INPUT',
-//   payload: {
-//     text: string
-//   }
-// };
 type storeType = {
   _state: stateType,
 
   getState: ()=>stateType,
-  // addPost: ()=>void,
-  // onChangePostInput: (text: string)=>void,
   _subscribeCallback: ()=>void,
   subscribe: (callback: ()=>void)=>void,
   dispatch: (action: ActionsTypes)=>void
 }
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changePostAC>
 
-//various
-const ADD_POST = 'ADD-POST';
-const CHANGE_POST_INPUT = 'CHANGE-POST-INPUT';
 
-export const addPostAC = () => ({type: ADD_POST} as const) 
-export const changePostAC = (text: string) => ({type: "CHANGE-POST-INPUT", payload: {text: text}} as const) 
-
+// example draft messages
 export const message0 = {
   id: 0,
   user: {
@@ -163,25 +146,8 @@ export const store: storeType = {
   },
 
   dispatch(action) {
-    switch (action.type) {
-      case ADD_POST:
-        const newPost = {
-          id: Date.now().toString(),
-          message: this._state.ProfilePage.newPostText,
-          likesCount: 0
-        };
-        // return {...state, ProfilePage: {...state.ProfilePage, posts: [...state.ProfilePage.posts, newPost]}}
-        this._state.ProfilePage.posts.push(newPost)
-        this._subscribeCallback()
-        break;
-      case CHANGE_POST_INPUT:
-        // return {...state, ProfilePage: {...state.ProfilePage, newPostText: text}}
-        this._state.ProfilePage.newPostText = action.payload.text
-        this._subscribeCallback()
-        break
+    this._state.ProfilePage = profilePageReducer(this._state.ProfilePage, action)
 
-      default:
-        break;
-    }
+    this._subscribeCallback()
   }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { GlobalStyle } from "./styles/Global.styled";
-import { store } from "./state/state";
+import { store } from "./redux/store";
 
 export const renderTree = () => {
   ReactDOM.render(

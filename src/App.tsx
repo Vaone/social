@@ -6,7 +6,8 @@ import Main from "./layout/Main";
 import Profile from "./pages/Profile/Profile";
 import Dialogs from "./pages/Dialogs/Dialogs";
 import { BrowserRouter, Route } from "react-router-dom";
-import { ActionsTypes, stateType } from "./state/state";
+import { stateType } from "./redux/store";
+import { ActionsTypes } from "./redux/profilePage-reducer";
 
 type AppPropsType = {
   state: stateType,

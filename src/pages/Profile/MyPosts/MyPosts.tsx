@@ -1,6 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import styled from "styled-components";
-import { ActionsTypes, addPostAC, changePostAC, PostType, ProfilePageType} from "../../../state/state";
+import {  PostType, ProfilePageType} from "../../../redux/store";
+import {ActionsTypes, addPostAC, changePostAC} from "../../../redux/profilePage-reducer"
 // import CustomInput from "../../../component/CustomInput";
 import Post from "./Post/Post";
 

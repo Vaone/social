@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { ActionsTypes, ProfilePageType } from "../../state/state";
+import { ActionsTypes } from "../../redux/profilePage-reducer";
+import { ProfilePageType } from "../../redux/store";
 import MyPosts from "./MyPosts/MyPosts";
 
 type ProfilePropsType = {

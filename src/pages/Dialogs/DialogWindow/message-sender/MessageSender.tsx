@@ -1,6 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
-import { message0 } from "../../../../state/state";
-import { MessageType } from "../../../../state/state";
+import { message0 } from "../../../../redux/store";
+import { MessageType } from "../../../../redux/store";
 import s from "./MessageSender.module.css";
 import Message from '../message/Message'
 
@@ -34,7 +34,7 @@ const MessageSender = () => {
         },
       },
     ]);
-    setTimeout(() => setText(""), 4);
+    setTimeout(() => setText(""), 1);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
