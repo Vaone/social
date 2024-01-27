@@ -1,4 +1,4 @@
-import { ActionsTypes, profilePageReducer } from './profilePage-reducer';
+import { ProfilePageActionsTypes, profilePageReducer } from './profilePage-reducer';
 import avatar from "../pages/Dialogs/DialogWindow/avatar.png";
 import avatar2 from "../pages/Dialogs/DialogWindow/avatar2.png";
 
@@ -43,7 +43,7 @@ type storeType = {
   getState: ()=>stateType,
   _subscribeCallback: ()=>void,
   subscribe: (callback: ()=>void)=>void,
-  dispatch: (action: ActionsTypes)=>void
+  dispatch: (action: ProfilePageActionsTypes)=>void
 }
 
 

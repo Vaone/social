@@ -1,8 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import styled from "styled-components";
-import {  PostType, ProfilePageType} from "../../../redux/store";
-import {ActionsTypes, addPostAC, changePostAC} from "../../../redux/profilePage-reducer"
-// import CustomInput from "../../../component/CustomInput";
+import {ProfilePageActionsTypes, addPostAC, changePostAC, PostType, ProfilePageType} from "../../../redux/profilePage-reducer"
 import Post from "./Post/Post";
 
 export interface MessagesType extends PostType {
@@ -11,23 +9,10 @@ export interface MessagesType extends PostType {
 
 type MyPostsProps = {
   state: ProfilePageType;
-  dispatch: (action: ActionsTypes)=>void,
+  dispatch: (action: ProfilePageActionsTypes)=>void,
 };
 
 const MyPosts: FC<MyPostsProps> = ({ state, dispatch }) => {
-  // let [posts, setPosts] = useState<PostType[]>(initialPosts);
-
-  // const addPost = (text: string) => {
-  //   if (text.trim()==='') {
-  //     return;
-  //   }
-  //   const newPost = {
-  //     id: Date.now().toString(),
-  //     message: text,
-  //     likesCount: 0
-  //   };
-  //   setPosts([...posts, newPost]);
-  // };
   const onChangeInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(changePostAC(e.currentTarget.value))
   }

@@ -4,14 +4,13 @@ import Header from "./layout/Header";
 import Nav from "./layout/Nav";
 import Main from "./layout/Main";
 import Profile from "./pages/Profile/Profile";
-import Dialogs from "./pages/Dialogs/Dialogs";
 import { BrowserRouter, Route } from "react-router-dom";
-import { stateType } from "./redux/store";
-import { ActionsTypes } from "./redux/profilePage-reducer";
+import { ProfilePageActionsTypes } from "./redux/profilePage-reducer";
+import { AppRootReducerStateType } from "./redux/redux-store";
 
 type AppPropsType = {
-  state: stateType,
-  dispatch: (action: ActionsTypes)=>void,
+  state: AppRootReducerStateType,
+  dispatch: (action: ProfilePageActionsTypes)=>void,
 }
 
 const App:FC<AppPropsType> = ({state, dispatch}) => {
@@ -24,9 +23,9 @@ const App:FC<AppPropsType> = ({state, dispatch}) => {
             <Nav />
             <Main>
               <Route path='/profile' render={()=> <Profile 
-              state={state.ProfilePage} 
+              state={state.profilePage} 
               dispatch={dispatch} />}/>
-              <Route path='/dialogs' render={()=> <Dialogs state={state.DialogsPage}/>}/>
+              {/* <Route path='/dialogs' render={()=> <Dialogs state={state.DialogsPage}/>}/> */}
             </Main>
           </StyledMain>
         </Wrapper>

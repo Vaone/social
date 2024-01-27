@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { ActionsTypes } from "../../redux/profilePage-reducer";
-import { ProfilePageType } from "../../redux/store";
+import { ProfilePageActionsTypes, ProfilePageType } from "../../redux/profilePage-reducer";
 import MyPosts from "./MyPosts/MyPosts";
 
 type ProfilePropsType = {
   state: ProfilePageType,
-  dispatch: (action: ActionsTypes)=>void,
+  dispatch: (action: ProfilePageActionsTypes)=>void,
 }
 
 const Profile: FC<ProfilePropsType> = ({ state, dispatch, ...children }) => {
