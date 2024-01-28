@@ -1,20 +1,7 @@
 import { FC } from "react";
-import { PostType } from "../../redux/profilePage-reducer";
-import MyPosts from "./MyPosts/MyPosts";
+import {MyPostsContainer} from './MyPosts/MyPostsContainer'
 
-type ProfilePropsType = {
-  posts: PostType[];
-  newPostText: string;
-  onChangeInput: (text: string) => void;
-  onClickAddPost: () => void;
-};
-
-const Profile: FC<ProfilePropsType> = ({
-  posts,
-  newPostText,
-  onChangeInput,
-  onClickAddPost,
-}) => {
+const Profile: FC = () => {
   return (
     <div>
       <p>Background</p>
@@ -39,12 +26,7 @@ const Profile: FC<ProfilePropsType> = ({
         quos, a ab commodi quisquam explicabo rerum. Veritatis tempore adipisci
         enim nam doloribus temporibus iusto illum suscipit provident!
       </p>
-      <MyPosts
-        posts={posts}
-        newPostText={newPostText}
-        onChangeInput={onChangeInput}
-        onClickAddPost={onClickAddPost}
-      />
+      <MyPostsContainer />
     </div>
   );
 };

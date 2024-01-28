@@ -4,18 +4,11 @@ import Header from "./layout/Header";
 import Nav from "./layout/Nav";
 import Main from "./layout/Main";
 import { BrowserRouter, Route } from "react-router-dom";
-import { ProfilePageActionsTypes } from "./redux/profilePage-reducer";
-import { AppRootReducerStateType } from "./redux/redux-store";
-import { DialogActionTypes } from "./redux/dialogPage-reducer";
 import DialogsContainer from "./pages/Dialogs/DialogsContainer";
-import ProfileContainer from "./pages/Profile/ProfileContainer";
+import Profile from "./pages/Profile/Profile";
 
-type AppPropsType = {
-  state: AppRootReducerStateType;
-  dispatch: (action: ProfilePageActionsTypes | DialogActionTypes) => void;
-};
 
-const App: FC<AppPropsType> = ({ state, dispatch }) => {
+const App: FC = () => {
   return (
     <BrowserRouter>
       <div className="App">
@@ -26,21 +19,11 @@ const App: FC<AppPropsType> = ({ state, dispatch }) => {
             <Main>
               <Route
                 path="/profile"
-                render={() => (
-                  <ProfileContainer
-                    state={state.profilePage}
-                    dispatch={dispatch}
-                  />
-                )}
+                render={() =><Profile />}
               />
               <Route
                 path="/dialogs"
-                render={() => (
-                  <DialogsContainer
-                    state={state.dialogPage}
-                    dispatch={dispatch}
-                  />
-                )}
+                render={()=><DialogsContainer />}  
               />
             </Main>
           </StyledMain>

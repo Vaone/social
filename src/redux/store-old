@@ -11,29 +11,29 @@ type MessageTextType = {
   text: string;
   time: string;
 };
-export type MessageType = {
+type MessageType = {
   id: number;
   user: UserType;
   message: MessageTextType;
 };
-export type PostType = {
+type PostType = {
   id: string;
   message: string;
   likesCount: number
 };
-export type ProfilePageType = {
+type ProfilePageType = {
   posts: PostType[],
   newPostText: string
 };
-export type DialogsListItem = {
+type DialogsListItem = {
   id: string,
   name: string,
   messagesList: MessageType[]
 }
-export type DialogsPageType = {
+type DialogsPageType = {
   dialogsList: DialogsListItem[]
 }
-export type stateType = {
+type stateType = {
   ProfilePage: ProfilePageType
   DialogsPage: DialogsPageType
 };

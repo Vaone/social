@@ -1,8 +1,11 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { MessagesType } from "../MyPosts";
+import { PostType } from "../../../../redux/profilePage-reducer";
+export interface MessagesPropsType extends PostType {
+  index?: number;
+}
 
-const Post: FC<MessagesType> = ({ id, message, likesCount, ...props }) => {
+const Post: FC<MessagesPropsType> = ({ id, message, likesCount, ...props }) => {
   return (
     <StyledPost>
       {props.index}. {message}

@@ -34,14 +34,10 @@ export const profilePageReducer = (state=initialState, action: ProfilePageAction
         message: state.newPostText,
         likesCount: 0
       };
-      // return {...state, ProfilePage: {...state.ProfilePage, posts: [...state.ProfilePage.posts, newPost]}}
-      state.posts.push(newPost)
-      return state
+      return {...state, posts: [...state.posts, newPost]}
     }
     case CHANGE_POST_INPUT: {
-      // return {...state, ProfilePage: {...state.ProfilePage, newPostText: text}}
-      state.newPostText = action.payload.text
-      return state
+      return {...state, newPostText: action.payload.text}
     }
     default: {
       return state

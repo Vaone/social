@@ -1,20 +1,9 @@
 import { ChangeEvent, FC } from "react";
 import styled from "styled-components";
-import { PostType } from "../../../redux/profilePage-reducer";
+import { MyPostsPropsType } from "./MyPostsContainer";
 import Post from "./Post/Post";
 
-export interface MessagesType extends PostType {
-  index?: number;
-}
-
-type MyPostsProps = {
-  posts: PostType[];
-  newPostText: string;
-  onChangeInput: (text: string) => void;
-  onClickAddPost: () => void;
-};
-
-const MyPosts: FC<MyPostsProps> = ({
+const MyPosts: FC<MyPostsPropsType> = ({
   posts,
   newPostText,
   onChangeInput,
