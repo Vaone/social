@@ -1,13 +1,20 @@
 import { FC } from "react";
-import { ProfilePageActionsTypes, ProfilePageType } from "../../redux/profilePage-reducer";
+import { PostType } from "../../redux/profilePage-reducer";
 import MyPosts from "./MyPosts/MyPosts";
 
 type ProfilePropsType = {
-  state: ProfilePageType,
-  dispatch: (action: ProfilePageActionsTypes)=>void,
-}
+  posts: PostType[];
+  newPostText: string;
+  onChangeInput: (text: string) => void;
+  onClickAddPost: () => void;
+};
 
-const Profile: FC<ProfilePropsType> = ({ state, dispatch, ...children }) => {
+const Profile: FC<ProfilePropsType> = ({
+  posts,
+  newPostText,
+  onChangeInput,
+  onClickAddPost,
+}) => {
   return (
     <div>
       <p>Background</p>
@@ -32,7 +39,12 @@ const Profile: FC<ProfilePropsType> = ({ state, dispatch, ...children }) => {
         quos, a ab commodi quisquam explicabo rerum. Veritatis tempore adipisci
         enim nam doloribus temporibus iusto illum suscipit provident!
       </p>
-      <MyPosts state={state} dispatch={dispatch}/>
+      <MyPosts
+        posts={posts}
+        newPostText={newPostText}
+        onChangeInput={onChangeInput}
+        onClickAddPost={onClickAddPost}
+      />
     </div>
   );
 };

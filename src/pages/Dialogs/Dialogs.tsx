@@ -1,28 +1,28 @@
 import { FC } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import styled from "styled-components";
-import { DialogActionTypes, DialogPageType } from "../../redux/dialogPage-reducer";
+import { DialogPageType, FriendType, MessagesListType } from "../../redux/dialogPage-reducer";
 import Chat from "./Chat";
 import FriendList from "./FriendList.tsx/FriendList";
 
 type DialogsPropsType = {
-  state: DialogPageType,
-  dispatch: (action: DialogActionTypes)=>void,
+  friendList: FriendType[],
+  messageList: MessagesListType
 }
 
-const Dialogs:FC<DialogsPropsType> = ({state, dispatch}) => {
+const Dialogs:FC<DialogsPropsType> = ({friendList, messageList}) => {
   return (
     <div>
       <Router>
         <StyledDialogs>
-          <FriendList friendList={state.friendList} />
+          <FriendList friendList={friendList} />
           <Switch>
-            {state.friendList.map((list) => (
+            {friendList.map((list) => (
               <Route
                 key={list.friendId}
                 path={`/dialogs/${list.friendId}`}
                 render={(props) => (
-                  <Chat {...props} messageList={state.messageList[list.friendId]} />
+                  <Chat {...props} messageList={messageList[list.friendId]} />
                 )}
               />
             ))}

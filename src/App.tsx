@@ -3,19 +3,19 @@ import styled from "styled-components";
 import Header from "./layout/Header";
 import Nav from "./layout/Nav";
 import Main from "./layout/Main";
-import Profile from "./pages/Profile/Profile";
 import { BrowserRouter, Route } from "react-router-dom";
 import { ProfilePageActionsTypes } from "./redux/profilePage-reducer";
 import { AppRootReducerStateType } from "./redux/redux-store";
-import Dialogs from "./pages/Dialogs/Dialogs";
 import { DialogActionTypes } from "./redux/dialogPage-reducer";
+import DialogsContainer from "./pages/Dialogs/DialogsContainer";
+import ProfileContainer from "./pages/Profile/ProfileContainer";
 
 type AppPropsType = {
-  state: AppRootReducerStateType,
-  dispatch: (action: ProfilePageActionsTypes | DialogActionTypes)=>void,
-}
+  state: AppRootReducerStateType;
+  dispatch: (action: ProfilePageActionsTypes | DialogActionTypes) => void;
+};
 
-const App:FC<AppPropsType> = ({state, dispatch}) => {
+const App: FC<AppPropsType> = ({ state, dispatch }) => {
   return (
     <BrowserRouter>
       <div className="App">
@@ -24,18 +24,31 @@ const App:FC<AppPropsType> = ({state, dispatch}) => {
           <StyledMain>
             <Nav />
             <Main>
-              <Route path='/profile' render={()=> <Profile 
-              state={state.profilePage} 
-              dispatch={dispatch} />}/>
-              <Route path='/dialogs' render={()=> <Dialogs state={state.dialogPage} 
-              dispatch={dispatch} />}/>
+              <Route
+                path="/profile"
+                render={() => (
+                  <ProfileContainer
+                    state={state.profilePage}
+                    dispatch={dispatch}
+                  />
+                )}
+              />
+              <Route
+                path="/dialogs"
+                render={() => (
+                  <DialogsContainer
+                    state={state.dialogPage}
+                    dispatch={dispatch}
+                  />
+                )}
+              />
             </Main>
           </StyledMain>
         </Wrapper>
       </div>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
 
