@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { MessageType } from "./Dialogs";
+import { MessageType } from "../../redux/dialogPage-reducer";
 
 type MessagePropsType = {
   message: MessageType;

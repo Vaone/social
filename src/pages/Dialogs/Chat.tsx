@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { MessageType } from "./Dialogs";
+import { MessageType } from "../../redux/dialogPage-reducer";
 import Message from "./Message";
 
 type ChatPropsType = {

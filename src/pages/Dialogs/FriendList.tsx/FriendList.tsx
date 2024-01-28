@@ -1,29 +1,19 @@
 import { FC } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import {StyledNavLink} from '../../../layout/Nav';
+import { FriendType } from "../../../redux/dialogPage-reducer";
 
-type friendType = {
-  friendId: string, 
-  name: string,
+type FriendListPropsType = {
+  friendList: FriendType[]
 }
 
-type FriendListPropsTyoe = {
-  friendList: friendType[]
-}
-
-const FriendList:FC<FriendListPropsTyoe> = ({friendList}) => {
-  
-
-  const onClickHandler = (id: string) => {};
-
+const FriendList:FC<FriendListPropsType> = ({friendList}) => {
   return (
     <FriendListStyled>
       {friendList.map((f) => (
         <StyledNavLink
           to={`/dialogs/${f.friendId}`}
           key={f.friendId}
-          onClick={() => onClickHandler(f.friendId)}
         >
           {f.name}
         </StyledNavLink>

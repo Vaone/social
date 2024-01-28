@@ -8,10 +8,11 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { ProfilePageActionsTypes } from "./redux/profilePage-reducer";
 import { AppRootReducerStateType } from "./redux/redux-store";
 import Dialogs from "./pages/Dialogs/Dialogs";
+import { DialogActionTypes } from "./redux/dialogPage-reducer";
 
 type AppPropsType = {
   state: AppRootReducerStateType,
-  dispatch: (action: ProfilePageActionsTypes)=>void,
+  dispatch: (action: ProfilePageActionsTypes | DialogActionTypes)=>void,
 }
 
 const App:FC<AppPropsType> = ({state, dispatch}) => {
@@ -26,7 +27,8 @@ const App:FC<AppPropsType> = ({state, dispatch}) => {
               <Route path='/profile' render={()=> <Profile 
               state={state.profilePage} 
               dispatch={dispatch} />}/>
-              <Route path='/dialogs' render={()=> <Dialogs />}/>
+              <Route path='/dialogs' render={()=> <Dialogs state={state.dialogPage} 
+              dispatch={dispatch} />}/>
             </Main>
           </StyledMain>
         </Wrapper>
