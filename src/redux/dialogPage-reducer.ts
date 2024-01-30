@@ -1,3 +1,6 @@
+import { randomUUID } from "crypto";
+import { v1 } from "uuid";
+
 export type MessageType = {
   messageId: string;
   text: string;
@@ -15,9 +18,11 @@ export type DialogPageType = {
   messageList: MessagesListType,
   friendList: FriendType[]
 }
-export type DialogActionTypes = {
-  type: string
-}
+export type DialogActionTypes = ReturnType<typeof sendNewMessageAC>
+
+const SEND_NEW_MESSAGE = 'SEND-NEW-MESSAGE'
+
+export const sendNewMessageAC = (newMessage: string, friendId: string) => ({type: SEND_NEW_MESSAGE, payload:{text:newMessage, friendId: friendId}} as const)
 
 const initialState: DialogPageType = {
   messageList: {
@@ -33,7 +38,7 @@ const initialState: DialogPageType = {
       { messageId: "1", text: "Hello", time: "14:14", sender: "Yi" },
       { messageId: "2", text: "Hello", time: "14:15", sender: "Me" },
       { messageId: "3", text: "Hs", time: "14:16", sender: "Me" },
-      { messageId: "3", text: "Hs", time: "14:16", sender: "Yi" },
+      { messageId: "4", text: "Hs", time: "14:16", sender: "Yi" },
     ],
   },
   friendList: [
@@ -45,9 +50,12 @@ const initialState: DialogPageType = {
 
 export const dialogPageReducer = (state=initialState, action: DialogActionTypes) => {
   switch (action.type) {
-    case 's':
-      return state
-  
+    case SEND_NEW_MESSAGE:
+      const time = new Date()
+      const newMessage = {
+        messageId: v1(), text: action.payload.text, time: `${time.getHours()} : ${time.getMinutes()}`, sender: "Me"
+      }
+      return {...state, messageList: {...state.messageList, [action.payload.friendId]: [...state.messageList[action.payload.friendId], newMessage] }}
     default:
       return state
   }

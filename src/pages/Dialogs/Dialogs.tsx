@@ -5,7 +5,11 @@ import Chat from "./Chat";
 import { DialogsPropsType } from "./DialogsContainer";
 import FriendList from "./FriendList.tsx/FriendList";
 
-const Dialogs:FC<DialogsPropsType> = ({friendList, messageList}) => {
+const Dialogs: FC<DialogsPropsType> = ({
+  friendList,
+  messageList,
+  sendNewMessage,
+}) => {
   return (
     <div>
       <Router>
@@ -17,7 +21,13 @@ const Dialogs:FC<DialogsPropsType> = ({friendList, messageList}) => {
                 key={list.friendId}
                 path={`/dialogs/${list.friendId}`}
                 render={(props) => (
-                  <Chat {...props} messageList={messageList[list.friendId]} />
+                  <Chat
+                    {...props}
+                    key={list.friendId}
+                    friendId={list.friendId}
+                    messageList={messageList[list.friendId]}
+                    sendNewMessage={sendNewMessage}
+                  />
                 )}
               />
             ))}
@@ -32,4 +42,4 @@ export default Dialogs;
 
 const StyledDialogs = styled.div`
   display: flex;
-`
+`;

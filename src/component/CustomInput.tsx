@@ -35,7 +35,8 @@ const StyledInputForm = styled.div`
 `
 const StyledCustomInput = styled.textarea`
   background-color: #F5F7FB;
-  width: 50%;
+  width: 60%;
+  min-width: 400px;
   resize: none;
   min-height: 100px;
   margin-right: 44px;

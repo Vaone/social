@@ -8,6 +8,7 @@ const Nav: FC = ({}) => {
       <ul>
         <li><StyledNavLink to={'/profile'}>Profile</StyledNavLink></li>
         <li><StyledNavLink to={'/dialogs'}>Dialogs</StyledNavLink></li>
+        <li><StyledNavLink to={'/users'}>Users</StyledNavLink></li>
         <li><StyledNavLink to={'/music'}>Music</StyledNavLink></li>
         <li><StyledNavLink to={'/news'}>News</StyledNavLink></li>
         <li><StyledNavLink to={'/settings'}>Settings</StyledNavLink></li>
