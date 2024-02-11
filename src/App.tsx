@@ -5,8 +5,8 @@ import Nav from "./layout/Nav";
 import Main from "./layout/Main";
 import { BrowserRouter, Route } from "react-router-dom";
 import DialogsContainer from "./pages/Dialogs/DialogsContainer";
-import Profile from "./pages/Profile/Profile";
 import UsersContainer from "./pages/Users/UsersContainer";
+import Profile from "./pages/Profile/Profile";
 
 
 const App: FC = () => {

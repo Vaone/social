@@ -1,48 +1,55 @@
-import React, { FC } from "react";
+import React from "react";
 import styled from "styled-components";
-import { v1 } from "uuid";
 import User from "./User";
-import { UsersPropsType } from "./UsersContainer";
-import s from "../../img/samurai.jpg";
+import { Pagination } from "antd";
+import { UserType } from "../../redux/usersPage-reducer";
+import Loader from "../../component/Loader";
 
-const Users: FC<UsersPropsType> = ({ users, setUsers, followHandler }) => {
-  if (users.length === 0) {
-    setUsers([
-      {
-        userId: v1(),
-        avatarPhoto: s,
-        userName: "Vladimir",
-        location: { city: "Los-Angeles", country: "USA" },
-        statusMessage: "Hello world",
-        followed: false,
-      },
-      {
-        userId: v1(),
-        avatarPhoto: s,
-        userName: "Nastya",
-        location: { city: "Los-Angeles", country: "USA" },
-        statusMessage: "ASdknlkad",
-        followed: true,
-      },
-      {
-        userId: v1(),
-        avatarPhoto: undefined,
-        userName: "Nikita",
-        location: { city: "Moscow", country: "Russia" },
-        statusMessage: "G psdasdasp;dl; asdasd",
-        followed: false,
-      },
-    ]);
-  }
-
-  return (
-    <StyledUserList>
-      {users.map((u) => (
-        <User key={u.userId} user={u} followHandler={followHandler} />
-      ))}
-    </StyledUserList>
-  );
+type UsersPropsType = {
+  users: UserType[];
+  pages: number;
+  currentPage: number;
+  isLoading: boolean;
+  onPageChange: (page: number) => void;
+  followHandler: (userId: number) => void;
 };
+
+class Users extends React.Component<UsersPropsType> {
+  render(): React.ReactNode {
+    const {
+      isLoading,
+      users,
+      pages,
+      currentPage,
+      onPageChange,
+      followHandler,
+    } = this.props;
+
+    return (
+      <>
+        <PaginationWrapper>
+          <Pagination
+            defaultCurrent={1}
+            total={pages}
+            current={currentPage}
+            onChange={onPageChange}
+          />
+        </PaginationWrapper>
+        {isLoading ? (
+          <LoaderWrapper>
+            <Loader />
+          </LoaderWrapper>
+        ) : (
+          <StyledUserList>
+            {users.map((u) => (
+              <User key={u.id} user={u} followHandler={followHandler} />
+            ))}
+          </StyledUserList>
+        )}
+      </>
+    );
+  }
+}
 
 export default Users;
 
@@ -50,4 +57,12 @@ const StyledUserList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+`;
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

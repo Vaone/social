@@ -5,22 +5,21 @@ import photo from '../../img/avatar.jpg'
 
 type UserPageType = {
   user: UserType,
-  followHandler: (userId: string)=>void
+  followHandler: (userId: number)=>void
 }
 
 const User:FC<UserPageType> = ({user, followHandler}) => {
   
   const onClickHandler = () => {
-    followHandler(user.userId)
+    followHandler(user.id)
   }
 
   return (
     <StyledUserCard>
-        <StyledAvatar src={user.avatarPhoto ? user.avatarPhoto : photo} alt="User Avatar" />
+        <StyledAvatar src={user.photos.small ? user.photos.small : photo} alt="User Avatar" />
         <StyledUserInfo>
-          <StyledName>{user.userName}</StyledName>
-          <StyledStatus>{user.location.country}, {user.location.city}</StyledStatus>
-          <StyledStatus>{user.statusMessage}</StyledStatus>
+          <StyledName>{user.name}</StyledName>
+          <StyledStatus>{user.status}</StyledStatus>
         </StyledUserInfo>
         <StyledBtn onClick={onClickHandler}>{user.followed ? 'Подписаться' : 'Отписаться'}</StyledBtn>
       </StyledUserCard>
@@ -42,7 +41,7 @@ const StyledUserCard = styled.div`
 const StyledAvatar = styled.img`
   width: 100%;
   height: 150px;
-  object-fit: cover;
+  object-fit: scale-down;
 `
 const StyledUserInfo = styled.div`
   padding: 15px;

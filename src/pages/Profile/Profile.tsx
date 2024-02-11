@@ -1,5 +1,6 @@
 import { FC } from "react";
 import {MyPostsContainer} from './MyPosts/MyPostsContainer'
+// import { ProfilePropsType } from "./ProfileContainer";
 
 const Profile: FC = () => {
   return (

@@ -16,7 +16,7 @@ type MapDispatchToPropsType = {
   onClickAddPost: ()=>void
 }
 
-type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType;
+export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType;
 const mapStateToProps = (state: RootState):MapStateToPropsType => {
   return {
     profilePage: state.profilePage
@@ -37,4 +37,5 @@ const mapDispatchToProps = (dispatch: AppDispatch):MapDispatchToPropsType => {
 
 const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile)
 
+export default ProfileContainer
 
