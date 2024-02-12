@@ -1,9 +1,9 @@
 import { Avatar, Divider } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import React, { memo } from "react";
-import { T_Profile } from "../../redux/profilePage-reducer";
 import { MyPostsContainer } from "./MyPosts/MyPostsContainer";
 import styled from "styled-components";
+import { T_Profile } from "../../api/Api";
 
 type ProfilePropsType = {
   profile: T_Profile;
@@ -31,7 +31,7 @@ class Profile extends React.Component<ProfilePropsType> {
               {Object.entries(profile.contacts).map(([key, value]) => (
                 <li key={key}>
                   <b>{key}: </b>
-                  <StyledContactLink href={value}>{value}</StyledContactLink>
+                  {/* <StyledContactLink href={value}>{value}</StyledContactLink> */}
                 </li>
               ))}
             </StyledContactList>
