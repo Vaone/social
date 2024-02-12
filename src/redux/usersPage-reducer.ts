@@ -3,7 +3,6 @@ const initialState:UserPageType = {
   pageSize: 5,
   usersCount: 1,
   currentPage: 1,
-  isLoading: false
 }
 
 //various
@@ -11,14 +10,12 @@ const FOLLOW_HANDLER = 'FOLLOW-HANDLER';
 const SET_USERS = 'SET-USERS';
 const SET_USERS_COUNT = 'SET-USERS-COUNT';
 const PAGE_CHANGE = 'PAGE-CHANGE';
-const TOGGLE_LOADER = 'TOGGLE-LOADER';
 
 // actions
 export const followHandler = (userId: number)=>({type: FOLLOW_HANDLER, payload: {userId}} as const)
 export const setUsers = (users: UserType[])=>({type: SET_USERS, payload: {users}} as const)
 export const setUsersCount = (count: number)=>({type: SET_USERS_COUNT, payload: {count}} as const)
 export const onPageChange = (page: number)=>({type: PAGE_CHANGE, payload: {page}} as const)
-export const toggleLoader = (isLoading: boolean)=>({type: TOGGLE_LOADER, payload: {isLoading}} as const)
 
 export const usersPageReducer = (state = initialState, action: UsersPageActionsTypes):UserPageType => {
   switch (action.type) {
@@ -30,8 +27,6 @@ export const usersPageReducer = (state = initialState, action: UsersPageActionsT
       return {...state, usersCount: action.payload.count}
     case PAGE_CHANGE:
       return {...state, currentPage: action.payload.page}
-    case TOGGLE_LOADER:
-      return {...state, isLoading: action.payload.isLoading}
     default:
       return state;
   }
@@ -49,7 +44,6 @@ export type UserPageType = {
   usersCount: number
   currentPage: number
   pageSize: number
-  isLoading: boolean
 }
 type PhotoType = {
   small: string,
@@ -59,4 +53,3 @@ type UsersPageActionsTypes = ReturnType<typeof followHandler>
 | ReturnType<typeof setUsers> 
 | ReturnType<typeof setUsersCount>
 | ReturnType<typeof onPageChange>
-| ReturnType<typeof toggleLoader>

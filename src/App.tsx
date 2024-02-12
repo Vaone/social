@@ -6,8 +6,7 @@ import Main from "./layout/Main";
 import { BrowserRouter, Route } from "react-router-dom";
 import DialogsContainer from "./pages/Dialogs/DialogsContainer";
 import UsersContainer from "./pages/Users/UsersContainer";
-import Profile from "./pages/Profile/Profile";
-
+import ProfileContainer from "./pages/Profile/ProfileContainer";
 
 const App: FC = () => {
   return (
@@ -19,8 +18,8 @@ const App: FC = () => {
             <Nav />
             <Main>
               <Route
-                path="/profile"
-                render={() =><Profile />}
+                path="/profile/:userId?"
+                render={() =><ProfileContainer />}
               />
               <Route
                 path="/dialogs"
@@ -46,7 +45,6 @@ const Wrapper = styled.div`
   height: 100vh;
   background-color: black;
 `;
-
 const StyledMain = styled.main`
   display: flex;
   width: 100%;

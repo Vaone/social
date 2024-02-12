@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-const Nav: FC = ({}) => {
+const Nav: FC = () => {
   return (
     <StyledNav>
       <ul>
@@ -24,19 +24,15 @@ const StyledNav = styled.nav`
   background-color: #50c47789;
   width: 20vw;
   height: 100%;
-
   position: fixed;
   top: 3.333rem;
-
   width: 16.6667rem;
   box-sizing: border-box;
   color: inherit;
   overflow-y: auto;
-
   transform: translateZ(0px);
   transition: transform 150ms ease-out 0s;
 `;
-
 export const StyledNavLink = styled(NavLink)`
 display: flex;
 padding: 10px;

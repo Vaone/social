@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Loader = () => <StyledLoader />
+const Loader = () => <LoaderWrapper><StyledLoader /></LoaderWrapper>
 
 export default Loader;
 
@@ -33,4 +33,8 @@ const StyledLoader = styled.div`
       background-position: 0% 100%, 100% 100%, 200% 100%;
     }
   }
+`;
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

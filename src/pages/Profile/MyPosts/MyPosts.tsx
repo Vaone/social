@@ -6,11 +6,11 @@ import Post from "./Post/Post";
 const MyPosts: FC<MyPostsPropsType> = ({
   posts,
   newPostText,
-  onChangeInput,
-  onClickAddPost,
+  changePost,
+  addPost,
 }) => {
   const onChangeInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    onChangeInput(e.currentTarget.value);
+    changePost(e.currentTarget.value);
   };
 
   return (
@@ -26,7 +26,7 @@ const MyPosts: FC<MyPostsPropsType> = ({
       ))}
 
       <StyledCustomInput onChange={onChangeInputHandler} value={newPostText} />
-      <StyledBtn onClick={onClickAddPost}> + </StyledBtn>
+      <StyledBtn onClick={addPost}> + </StyledBtn>
     </div>
   );
 };

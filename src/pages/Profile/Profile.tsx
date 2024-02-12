@@ -1,35 +1,86 @@
-import { FC } from "react";
-import {MyPostsContainer} from './MyPosts/MyPostsContainer'
-// import { ProfilePropsType } from "./ProfileContainer";
+import { Avatar, Divider } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import React, { memo } from "react";
+import { T_Profile } from "../../redux/profilePage-reducer";
+import { MyPostsContainer } from "./MyPosts/MyPostsContainer";
+import styled from "styled-components";
 
-const Profile: FC = () => {
-  return (
-    <div>
-      <p>Background</p>
-      <p>avatar + Name</p>
-      <p>Info</p>
-      <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi
-        quibusdam debitis omnis reprehenderit delectus, doloremque aut repellat
-        ut ducimus et officia expedita soluta voluptatem sapiente minus
-        mollitia, odit quo provident optio repellendus illo? Provident
-        architecto doloremque voluptatibus doloribus blanditiis sequi, eligendi
-        accusantium unde adipisci sit tenetur ullam esse exercitationem modi
-        magni explicabo quo eum qui assumenda quaerat optio possimus vero quas.
-        Accusantium, magnam sint? Tempora ea necessitatibus ipsam laudantium
-        vero expedita esse natus? Tempore, tempora. Quam vero reprehenderit
-        consectetur odit est dolores quasi ipsa tempore quisquam consequatur.
-        Alias similique et expedita, non ad incidunt sapiente quia! Aliquam
-        voluptas necessitatibus sit atque minima debitis eveniet aut et rerum,
-        dolores eos natus amet. Placeat nostrum accusamus modi mollitia fuga
-        voluptates asperiores perspiciatis, minus, quidem quasi doloribus
-        corrupti consectetur ad aliquam pariatur iure voluptatibus consequuntur
-        quos, a ab commodi quisquam explicabo rerum. Veritatis tempore adipisci
-        enim nam doloribus temporibus iusto illum suscipit provident!
-      </p>
-      <MyPostsContainer />
-    </div>
-  );
+type ProfilePropsType = {
+  profile: T_Profile;
 };
+class Profile extends React.Component<ProfilePropsType> {
+  render(): React.ReactNode {
+    const { profile } = this.props;
 
-export default Profile;
+    return (
+      <div>
+        <StyledProfile>
+          <StyledAvatar>
+            {profile.photos.large ? (
+              <Avatar size={100} src={profile.photos.large} />
+            ) : (
+              <Avatar size={100} icon={<UserOutlined />} />
+            )}
+          </StyledAvatar>
+          <StyledUInfo>
+            <h2>{profile.fullName}</h2>
+            <p>{profile.lookingForAJobDescription}</p>
+            <Divider />
+            <h3>Contact Information</h3>
+            <StyledContactList>
+              {Object.entries(profile.contacts).map(([key, value]) => (
+                <li key={key}>
+                  <b>{key}: </b>
+                  <StyledContactLink href={value}>{value}</StyledContactLink>
+                </li>
+              ))}
+            </StyledContactList>
+          </StyledUInfo>
+        </StyledProfile>
+        <MyPostsContainer />
+      </div>
+    );
+  }
+}
+
+const MProfile = memo(Profile);
+
+export default MProfile;
+
+const StyledProfile = styled.div`
+  padding: 20px;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+const StyledAvatar = styled.div`
+  margin-bottom: 20px;
+`;
+const StyledUInfo = styled.div`
+  h2 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  p {
+    color: #555;
+  }
+`;
+const StyledContactLink = styled.a`
+  color: #0073b1;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+const StyledContactList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  & > li {
+    margin-bottom: 5px;
+    color: #666;
+    & > b {
+      margin-right: 5px;
+      font-weight: bold;
+    }
+  }
+`;

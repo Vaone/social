@@ -64,11 +64,9 @@ const PaginationContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-
 interface PageNumberProps {
   isActive: boolean;
 }
-
 const PageNumber = styled.div<PageNumberProps>`
   padding: 5px 10px;
   margin: 0 2px;

@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { v1 } from "uuid";
 
 export type MessageType = {

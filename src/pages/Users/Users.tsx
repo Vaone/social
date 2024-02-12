@@ -36,9 +36,7 @@ class Users extends React.Component<UsersPropsType> {
           />
         </PaginationWrapper>
         {isLoading ? (
-          <LoaderWrapper>
             <Loader />
-          </LoaderWrapper>
         ) : (
           <StyledUserList>
             {users.map((u) => (
@@ -62,7 +60,4 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
-const LoaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+

@@ -1,11 +1,9 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import styled from "styled-components";
-import Profile from "../pages/Profile/Profile";
 
 const Main: FC = ({ children }) => {
   return (
     <StyledSection>
-
       {children}
     </StyledSection>
   );
@@ -15,7 +13,6 @@ export default Main;
 
 const StyledSection = styled.section`
   background-color: #e7ecfc;
-
   margin: 0px auto;
   max-width: 100vw;
   width: 100%;

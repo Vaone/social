@@ -1,16 +1,16 @@
 import axios from "axios";
 import React from "react";
 import { connect } from "react-redux";
-import { AppDispatch, RootState } from "../../redux/redux-store";
+import { RootState } from "../../redux/redux-store";
 import {
   followHandler,
   onPageChange,
   setUsersCount,
   setUsers,
   UserType,
-  toggleLoader,
 } from "../../redux/usersPage-reducer";
 import Users from "./Users";
+import { toggleLoader } from "../../redux/common-reducer";
 
 class UsersApiContainer extends React.Component<UsersCPropsType> {
   componentDidMount() {
@@ -73,7 +73,7 @@ const mapStateToProps = (state: RootState) => {
     usersCount: state.usersPage.usersCount,
     currentPage: state.usersPage.currentPage,
     pageSize: state.usersPage.pageSize,
-    isLoading: state.usersPage.isLoading,
+    isLoading: state.anyPage.isLoading
   }
 };
 
