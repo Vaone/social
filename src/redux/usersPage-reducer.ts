@@ -12,7 +12,7 @@ const SET_USERS_COUNT = 'SET-USERS-COUNT';
 const PAGE_CHANGE = 'PAGE-CHANGE';
 
 // actions
-export const followHandler = (userId: number)=>({type: FOLLOW_HANDLER, payload: {userId}} as const)
+export const setFollow = (userId: number)=>({type: FOLLOW_HANDLER, payload: {userId}} as const)
 export const setUsers = (users: UserType[])=>({type: SET_USERS, payload: {users}} as const)
 export const setUsersCount = (count: number)=>({type: SET_USERS_COUNT, payload: {count}} as const)
 export const onPageChange = (page: number)=>({type: PAGE_CHANGE, payload: {page}} as const)
@@ -49,7 +49,7 @@ type PhotoType = {
   small: string,
   large: string
 }
-type UsersPageActionsTypes = ReturnType<typeof followHandler> 
+type UsersPageActionsTypes = ReturnType<typeof setFollow> 
 | ReturnType<typeof setUsers> 
 | ReturnType<typeof setUsersCount>
 | ReturnType<typeof onPageChange>

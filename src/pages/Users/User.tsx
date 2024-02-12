@@ -1,39 +1,70 @@
 import { Avatar } from "antd";
-import { FC } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { UserType } from "../../redux/usersPage-reducer";
 import { UserOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 type UserPageType = {
   user: UserType;
-  followHandler: (userId: number) => void;
+  setFollow: (userId: number) => void;
 };
-
-const User: FC<UserPageType> = ({ user, followHandler }) => {
-  const onClickHandler = () => {
-    followHandler(user.id);
-  };
-
-  return (
-    <StyledUserCard>
-      <NavLink to={'/profile/'+user.id}>
-        {user.photos.small ? (
-          <Avatar size={100} src={user.photos.small} />
-        ) : (
-          <Avatar size={100} icon={<UserOutlined />} />
-        )}
-      </NavLink>
-      <StyledUserInfo>
-        <StyledName>{user.name}</StyledName>
-        <StyledStatus>{user.status}</StyledStatus>
-      </StyledUserInfo>
-      <StyledBtn onClick={onClickHandler}>
-        {user.followed ? "Подписаться" : "Отписаться"}
-      </StyledBtn>
-    </StyledUserCard>
-  );
+type Response<T = {}> = {
+  resultCode: number;
+  messages: string[];
+  fieldsError: string[];
+  data: T;
 };
+class User extends React.Component<UserPageType> {
+  render() {
+    const { user, setFollow } = this.props;
+
+    const onClickHandler = async () => {
+      try {
+        if (!user.followed) {
+          const res = await axios.post<Response>(
+            "https://social-network.samuraijs.com/api/1.0/follow/" + user.id,
+            {},
+            { withCredentials: true }
+          );
+          if (res.data.resultCode === 0) {
+            setFollow(user.id);
+          }
+        } else {
+          const res = await axios.delete<Response>(
+            "https://social-network.samuraijs.com/api/1.0/follow/" + user.id,
+            { withCredentials: true }
+          );
+          if (res.data.resultCode === 0) {
+            setFollow(user.id);
+          }
+        }
+      } catch (err) {
+        console.error("Error!: ", err);
+      }
+    };
+
+    return (
+      <StyledUserCard>
+        <NavLink to={"/profile/" + user.id}>
+          {user.photos.small ? (
+            <Avatar size={100} src={user.photos.small} />
+          ) : (
+            <Avatar size={100} icon={<UserOutlined />} />
+          )}
+        </NavLink>
+        <StyledUserInfo>
+          <StyledName>{user.name}</StyledName>
+          <StyledStatus>{user.status}</StyledStatus>
+        </StyledUserInfo>
+        <StyledBtn onClick={onClickHandler}>
+          {user.followed ? "Отписаться" : "Подписаться"}
+        </StyledBtn>
+      </StyledUserCard>
+    );
+  }
+}
 
 export default User;
 

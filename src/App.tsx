@@ -1,19 +1,19 @@
 import { FC } from "react";
 import styled from "styled-components";
-import Header from "./layout/Header";
 import Nav from "./layout/Nav";
 import Main from "./layout/Main";
 import { BrowserRouter, Route } from "react-router-dom";
 import DialogsContainer from "./pages/Dialogs/DialogsContainer";
 import UsersContainer from "./pages/Users/UsersContainer";
 import ProfileContainer from "./pages/Profile/ProfileContainer";
+import HeadersContainer from "./layout/HeaderContainer";
 
 const App: FC = () => {
   return (
     <BrowserRouter>
       <div className="App">
         <Wrapper>
-          <Header />
+          <HeadersContainer />
           <StyledMain>
             <Nav />
             <Main>

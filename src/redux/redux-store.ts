@@ -3,6 +3,7 @@ import { combineReducers, createStore } from "redux"
 import { profilePageReducer } from "./profilePage-reducer";
 import { usersPageReducer } from './usersPage-reducer';
 import { commonReducer } from './common-reducer';
+import { authReducer } from './auth-reducer';
 
 const rootReducer = combineReducers(
   {
@@ -10,6 +11,7 @@ const rootReducer = combineReducers(
     dialogPage: dialogPageReducer,
     usersPage: usersPageReducer,
     anyPage: commonReducer,
+    authUser: authReducer
   }
 )
 

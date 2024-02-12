@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/redux-store";
 import {
-  followHandler,
+  setFollow,
   onPageChange,
   setUsersCount,
   setUsers,
@@ -17,7 +17,7 @@ class UsersApiContainer extends React.Component<UsersCPropsType> {
     this.props.toggleLoader(true)
     axios
       .get<ResponseData>(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`
+        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`, {withCredentials: true}
       )
       .then((res) => {
         this.props.setUsers(res.data.items);
@@ -31,7 +31,7 @@ class UsersApiContainer extends React.Component<UsersCPropsType> {
       this.props.toggleLoader(true)
       axios
         .get<ResponseData>(
-          `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`
+          `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}`, {withCredentials: true}
         )
         .then((res) => {
           this.props.setUsers(res.data.items);
@@ -48,7 +48,7 @@ class UsersApiContainer extends React.Component<UsersCPropsType> {
       usersCount,
       pageSize,
       onPageChange,
-      followHandler,
+      setFollow,
       isLoading,
     } = this.props;
 
@@ -61,7 +61,7 @@ class UsersApiContainer extends React.Component<UsersCPropsType> {
         currentPage={currentPage}
         pages={pages}
         onPageChange={onPageChange}
-        followHandler={followHandler}
+        setFollow={setFollow}
       />
     );
   }
@@ -77,7 +77,7 @@ const mapStateToProps = (state: RootState) => {
   }
 };
 
-const UsersContainer = connect(mapStateToProps, {followHandler, setUsers, setUsersCount, onPageChange, toggleLoader})(UsersApiContainer);
+const UsersContainer = connect(mapStateToProps, {setFollow, setUsers, setUsersCount, onPageChange, toggleLoader})(UsersApiContainer);
 
 export default UsersContainer;
 
@@ -95,7 +95,7 @@ type MapStateToPropsType = {
   isLoading: boolean
 };
 type MapDispatchToPropsType = {
-  followHandler: (userId: number) => void
+  setFollow: (userId: number) => void
   setUsers: (users: UserType[]) => void
   setUsersCount: (count: number) => void
   onPageChange: (page: number)=>void

@@ -12,10 +12,10 @@ class ProfileApiContainer extends React.Component<ProfilePropsType> {
 
   componentDidMount() {
     let userId = this.props.match.params.userId
-    if (!userId) userId = "30710"
+    if (!userId) userId = String(this.props.authUID)
     this.props.toggleLoader(true);
     axios
-      .get("https://social-network.samuraijs.com/api/1.0/profile/"+userId)
+      .get("https://social-network.samuraijs.com/api/1.0/profile/"+userId, {withCredentials: true})
       .then((res) => {
         this.props.setProfile(res.data);
         this.props.toggleLoader(false);
@@ -32,11 +32,11 @@ class ProfileApiContainer extends React.Component<ProfilePropsType> {
   }
 }
 
-const mapStateToProps = (state: RootState): MapStateToPropsType => {
-  return {
-    profile: state.profilePage.profile,
-  };
-};
+const mapStateToProps = (state: RootState): MapStateToPropsType => ({
+  profile: state.profilePage.profile,
+  authUID: state.authUser.id
+});
+
 
 // throw through HOC:withRouter
 const ProfileWithRouter = withRouter(ProfileApiContainer)
@@ -50,6 +50,7 @@ type ParamsType = {
 }
 type MapStateToPropsType = {
   profile?: T_Profile;
+  authUID: number
 };
 type MapDispatchToPropsType = {
   toggleLoader: (isLoading: boolean) => void;

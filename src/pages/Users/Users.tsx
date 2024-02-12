@@ -11,7 +11,7 @@ type UsersPropsType = {
   currentPage: number;
   isLoading: boolean;
   onPageChange: (page: number) => void;
-  followHandler: (userId: number) => void;
+  setFollow: (userId: number) => void;
 };
 
 class Users extends React.Component<UsersPropsType> {
@@ -22,7 +22,7 @@ class Users extends React.Component<UsersPropsType> {
       pages,
       currentPage,
       onPageChange,
-      followHandler,
+      setFollow,
     } = this.props;
 
     return (
@@ -40,7 +40,7 @@ class Users extends React.Component<UsersPropsType> {
         ) : (
           <StyledUserList>
             {users.map((u) => (
-              <User key={u.id} user={u} followHandler={followHandler} />
+              <User key={u.id} user={u} setFollow={setFollow} />
             ))}
           </StyledUserList>
         )}
