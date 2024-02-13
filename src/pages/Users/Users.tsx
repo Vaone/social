@@ -10,8 +10,9 @@ type UsersPropsType = {
   pages: number;
   currentPage: number;
   isLoading: boolean;
+  followInProgress: number[]
   onPageChange: (page: number) => void;
-  setFollow: (userId: number) => void;
+  toggleFollowTC: (userId: number, userFollowed: boolean) => void;
 };
 
 class Users extends React.Component<UsersPropsType> {
@@ -22,7 +23,8 @@ class Users extends React.Component<UsersPropsType> {
       pages,
       currentPage,
       onPageChange,
-      setFollow,
+      toggleFollowTC,
+      followInProgress,
     } = this.props;
 
     return (
@@ -40,7 +42,7 @@ class Users extends React.Component<UsersPropsType> {
         ) : (
           <StyledUserList>
             {users.map((u) => (
-              <User key={u.id} user={u} setFollow={setFollow} />
+              <User key={u.id} user={u} toggleFollowTC={toggleFollowTC} followInProgress={followInProgress}/>
             ))}
           </StyledUserList>
         )}

@@ -11,11 +11,17 @@ export const UserAPI = {
     instance
       .get<ResponseGetUsers>(`users?page=${currentPage}`)
       .then((res) => res.data),
+  followAnotherUser: (userId: number) =>
+    instance.post<Response>("follow/" + userId),
+  unfollowAnotherUser: (userId: number) =>
+    instance.delete<Response>("follow/" + userId),
 };
 
 export const AuthAPI = {
   getAuth: () =>
-    instance.get<ResponseGetAuth>("auth/me").then((res) => res.data),
+    instance
+      .get<Response<T_AuthResponseData>>("auth/me")
+      .then((res) => res.data),
 };
 
 export const ProfileAPI = {
@@ -28,11 +34,11 @@ type ResponseGetUsers = {
   totalCount: number;
   error: string;
 };
-type ResponseGetAuth = {
+type Response<T = {}> = {
   resultCode: number;
   messages: string[];
-  data: T_AuthResponseData;
   fieldsErrors: string[];
+  data: T;
 };
 export type T_AuthResponseData = {
   id: number;

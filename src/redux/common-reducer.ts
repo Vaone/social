@@ -18,4 +18,4 @@ export const commonReducer = (state = initialState, action:CmnActionsType) => {
 type CmnStateType = {
   isLoading: boolean
 }
-type CmnActionsType = ReturnType<typeof toggleLoader>
+export type CmnActionsType = ReturnType<typeof toggleLoader>

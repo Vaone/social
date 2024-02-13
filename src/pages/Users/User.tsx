@@ -1,48 +1,22 @@
-import { Avatar } from "antd";
-import React, { FC } from "react";
+import { Avatar, Button } from "antd";
+import React from "react";
 import styled from "styled-components";
 import { UserType } from "../../redux/usersPage-reducer";
 import { UserOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 
 type UserPageType = {
   user: UserType;
-  setFollow: (userId: number) => void;
+  followInProgress: number[];
+  toggleFollowTC: (userId: number, userFollowed: boolean) => void;
 };
-type Response<T = {}> = {
-  resultCode: number;
-  messages: string[];
-  fieldsError: string[];
-  data: T;
-};
+
 class User extends React.Component<UserPageType> {
   render() {
-    const { user, setFollow } = this.props;
-
+    const { user, followInProgress, toggleFollowTC } = this.props;
+    const isFollow = followInProgress.some((id) => id === user.id)
     const onClickHandler = async () => {
-      try {
-        if (!user.followed) {
-          const res = await axios.post<Response>(
-            "https://social-network.samuraijs.com/api/1.0/follow/" + user.id,
-            {},
-            { withCredentials: true }
-          );
-          if (res.data.resultCode === 0) {
-            setFollow(user.id);
-          }
-        } else {
-          const res = await axios.delete<Response>(
-            "https://social-network.samuraijs.com/api/1.0/follow/" + user.id,
-            { withCredentials: true }
-          );
-          if (res.data.resultCode === 0) {
-            setFollow(user.id);
-          }
-        }
-      } catch (err) {
-        console.error("Error!: ", err);
-      }
+      toggleFollowTC(user.id, user.followed)
     };
 
     return (
@@ -58,9 +32,14 @@ class User extends React.Component<UserPageType> {
           <StyledName>{user.name}</StyledName>
           <StyledStatus>{user.status}</StyledStatus>
         </StyledUserInfo>
-        <StyledBtn onClick={onClickHandler}>
+
+        <Button
+          onClick={onClickHandler}
+          disabled={isFollow}
+          type={user.followed ? "default" : "primary"}
+        >
           {user.followed ? "Отписаться" : "Подписаться"}
-        </StyledBtn>
+        </Button>
       </StyledUserCard>
     );
   }
@@ -80,19 +59,6 @@ const StyledUserCard = styled.div`
 `;
 const StyledUserInfo = styled.div`
   padding: 15px;
-`;
-const StyledBtn = styled.button`
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  border-radius: 0 0 8px 8px;
-  font-size: 16px;
-  &:hover {
-    background-color: #217dbb;
-  }
 `;
 const StyledName = styled.h3`
   margin: 0;

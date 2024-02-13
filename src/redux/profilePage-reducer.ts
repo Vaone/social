@@ -1,4 +1,7 @@
-import { T_Profile } from "../api/Api";
+import { Dispatch } from "redux";
+import { ProfileAPI, T_Profile } from "../api/Api";
+import { toggleLoader } from "./common-reducer";
+import { AppThunk } from "./redux-store";
 
 // various
 export const ADD_POST = "ADD-POST";
@@ -44,7 +47,7 @@ const initialState: ProfilePageType = {
 
 export const profilePageReducer = (
   state = initialState,
-  action: ProfilePageActionsTypes
+  action: ProfilePageActionsType
 ): ProfilePageType => {
   switch (action.type) {
     case ADD_POST: {
@@ -67,6 +70,16 @@ export const profilePageReducer = (
   }
 };
 
+//thunks
+export const getProfileTC =
+  (userId: number): AppThunk =>
+  async (dispatch: Dispatch) => {
+    dispatch(toggleLoader(true));
+    const data = await ProfileAPI.getProfile(userId);
+    dispatch(setProfile(data));
+    dispatch(toggleLoader(false));
+  };
+
 // types
 export type PostType = {
   id: string;
@@ -78,8 +91,7 @@ export type ProfilePageType = {
   newPostText: string;
   profile: T_Profile;
 };
-
-export type ProfilePageActionsTypes =
+export type ProfilePageActionsType =
   | ReturnType<typeof addPost>
   | ReturnType<typeof changePost>
   | ReturnType<typeof setProfile>;

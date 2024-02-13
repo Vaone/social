@@ -1,22 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setProfile } from "../../redux/profilePage-reducer";
-import { toggleLoader } from "../../redux/common-reducer";
+import { getProfileTC } from "../../redux/profilePage-reducer";
 import { RootState } from "../../redux/redux-store";
 import Profile from "./Profile";
 import Loader from "../../component/Loader";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { ProfileAPI, T_Profile } from "../../api/Api";
+import { T_Profile } from "../../api/Api";
 
 class ProfileApiContainer extends React.Component<ProfilePropsType> {
   componentDidMount() {
-    let userId = this.props.match.params.userId;
-    if (!userId) userId = String(this.props.authUID);
-    this.props.toggleLoader(true);
-    ProfileAPI.getProfile(Number(userId)).then((data) => {
-      this.props.setProfile(data);
-      this.props.toggleLoader(false);
-    });
+    let userId:number = Number(this.props.match.params.userId);
+    if (!userId) userId = this.props.authUID;
+    this.props.getProfileTC(userId)
   }
 
   render(): React.ReactNode {
@@ -37,7 +32,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => ({
 // throw through HOC:withRouter
 const ProfileWithRouter = withRouter(ProfileApiContainer);
 // api-container throw through bll-container
-const ProfileContainer = connect(mapStateToProps, { toggleLoader, setProfile })(
+const ProfileContainer = connect(mapStateToProps, { getProfileTC })(
   ProfileWithRouter
 );
 
@@ -51,8 +46,7 @@ type MapStateToPropsType = {
   authUID: number;
 };
 type MapDispatchToPropsType = {
-  toggleLoader: (isLoading: boolean) => void;
-  setProfile: (profile: T_Profile) => void;
+  getProfileTC: (userId: number)=>void
 };
 export type ProfilePropsType = MapStateToPropsType &
   MapDispatchToPropsType &

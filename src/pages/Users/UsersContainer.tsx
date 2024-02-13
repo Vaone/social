@@ -1,36 +1,22 @@
-import axios from "axios";
 import React from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/redux-store";
 import {
-  setFollow,
   onPageChange,
-  setUsersCount,
-  setUsers,
+  getUsersTC,
   UserType,
+  toggleFollowTC
 } from "../../redux/usersPage-reducer";
 import Users from "./Users";
-import { toggleLoader } from "../../redux/common-reducer";
-import { UserAPI } from "../../api/Api";
 
 class UsersApiContainer extends React.Component<UsersCPropsType> {
   componentDidMount() {
-    this.props.toggleLoader(true);
-    UserAPI.getUsers(this.props.currentPage).then((data) => {
-      this.props.setUsers(data.items);
-      this.props.setUsersCount(data.totalCount);
-      this.props.toggleLoader(false);
-    });
+    this.props.getUsersTC(this.props.currentPage)
   }
 
   componentDidUpdate(prevProps: UsersCPropsType) {
     if (this.props.currentPage !== prevProps.currentPage) {
-      this.props.toggleLoader(true);
-      UserAPI.getUsers(this.props.currentPage).then((data) => {
-        this.props.setUsers(data.items);
-        this.props.setUsersCount(data.totalCount);
-        this.props.toggleLoader(false);
-      });
+      this.props.getUsersTC(this.props.currentPage)
     }
   }
 
@@ -41,8 +27,9 @@ class UsersApiContainer extends React.Component<UsersCPropsType> {
       usersCount,
       pageSize,
       onPageChange,
-      setFollow,
       isLoading,
+      followInProgress,
+      toggleFollowTC,
     } = this.props;
 
     const pages = Math.ceil(usersCount / pageSize);
@@ -53,8 +40,9 @@ class UsersApiContainer extends React.Component<UsersCPropsType> {
         users={users}
         currentPage={currentPage}
         pages={pages}
+        followInProgress={followInProgress}
         onPageChange={onPageChange}
-        setFollow={setFollow}
+        toggleFollowTC={toggleFollowTC}
       />
     );
   }
@@ -67,15 +55,14 @@ const mapStateToProps = (state: RootState) => {
     currentPage: state.usersPage.currentPage,
     pageSize: state.usersPage.pageSize,
     isLoading: state.anyPage.isLoading,
+    followInProgress: state.usersPage.followInProgress
   };
 };
 
 const UsersContainer = connect(mapStateToProps, {
-  setFollow,
-  setUsers,
-  setUsersCount,
   onPageChange,
-  toggleLoader,
+  getUsersTC,
+  toggleFollowTC
 })(UsersApiContainer);
 
 export default UsersContainer;
@@ -88,12 +75,11 @@ type MapStateToPropsType = {
   currentPage: number;
   pageSize: number;
   isLoading: boolean;
+  followInProgress: number[]
 };
 type MapDispatchToPropsType = {
-  setFollow: (userId: number) => void;
-  setUsers: (users: UserType[]) => void;
-  setUsersCount: (count: number) => void;
-  onPageChange: (page: number) => void;
-  toggleLoader: (isLoading: boolean) => void;
+  onPageChange: (page: number) => void
+  getUsersTC: (currentPage: number) => void
+  toggleFollowTC: (userId: number, userFollowed: boolean) => void
 };
 type UsersCPropsType = MapStateToPropsType & MapDispatchToPropsType;

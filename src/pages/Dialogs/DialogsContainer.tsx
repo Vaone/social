@@ -1,17 +1,7 @@
 import { connect } from "react-redux";
-import { FriendType, MessagesListType, sendNewMessageAC } from "../../redux/dialogPage-reducer";
-import { AppDispatch, RootState } from "../../redux/redux-store";
+import { FriendType, MessagesListType, sendNewMessage } from "../../redux/dialogPage-reducer";
+import { RootState } from "../../redux/redux-store";
 import Dialogs from "./Dialogs";
-
-type MapStateToPropsType = {
-  friendList: FriendType[],
-  messageList: MessagesListType,
-};
-type MapDispatchToPropsType = {
-  sendNewMessage: (newMessage: string, friendId: string)=>void
-};
-
-export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -19,13 +9,17 @@ const mapStateToProps = (state: RootState) => {
     messageList: state.dialogPage.messageList,
   };
 };
-const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => {
-  return {
-    sendNewMessage: (newMessage:string, friendId: string)=>{
-      dispatch(sendNewMessageAC(newMessage, friendId))
-    }
-  };
-};
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+
+const DialogsContainer = connect(mapStateToProps, {sendNewMessage})(Dialogs);
 
 export default DialogsContainer;
+
+//types
+type MapStateToPropsType = {
+  friendList: FriendType[],
+  messageList: MessagesListType,
+};
+type MapDispatchToPropsType = {
+  sendNewMessage: (newMessage: string, friendId: string)=>void
+};
+export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType;

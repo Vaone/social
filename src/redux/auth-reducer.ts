@@ -1,36 +1,52 @@
-import { T_AuthResponseData } from "../api/Api";
+import { AppThunk } from "./redux-store";
+import { AuthAPI, T_AuthResponseData } from "../api/Api";
+import { Dispatch } from "redux";
 
-const initialState:AuthUserType = {
+const initialState: AuthUserType = {
   id: 2,
-  email: '',
-  login: '',
-  isAuth: false
-}
+  email: "",
+  login: "",
+  isAuth: false,
+};
 
 //various
-const SET_USER = 'SET_USER';
-const SET_AUTH = 'SET_AUTH';
+const SET_USER = "SET_USER";
+const SET_AUTH = "SET_AUTH";
 
 // actions
-export const setUser = (user: T_AuthResponseData)=>({type: SET_USER, payload: {user}} as const)
-export const setAuth = (isAuth: boolean)=>({type: SET_AUTH, payload: {isAuth}} as const)
+export const setUser = (user: T_AuthResponseData) =>
+  ({ type: SET_USER, payload: { user } } as const);
+export const setAuth = (isAuth: boolean) =>
+  ({ type: SET_AUTH, payload: { isAuth } } as const);
 
-export const authReducer = (state = initialState, action: UsersPageActionsTypes):AuthUserType => {
+export const authReducer = (
+  state = initialState,
+  action: UsersPageActionsType
+): AuthUserType => {
   switch (action.type) {
     case SET_USER:
-      return {...state, ...action.payload.user}
+      return { ...state, ...action.payload.user };
     case SET_AUTH:
-      return {...state, isAuth: action.payload.isAuth}
+      return { ...state, isAuth: action.payload.isAuth };
     default:
       return state;
   }
-}
+};
+
+// thunks
+export const getAuthTC = ():AppThunk => async (dispatch: Dispatch) => {
+  const res = await AuthAPI.getAuth();
+  dispatch(setUser(res.data));
+  dispatch(setAuth(true));
+};
 
 //types
 export type AuthUserType = {
-  id: number
-  email: string
-  login: string
-  isAuth: boolean
-}
-type UsersPageActionsTypes = ReturnType<typeof setUser> | ReturnType<typeof setAuth>
+  id: number;
+  email: string;
+  login: string;
+  isAuth: boolean;
+};
+type UsersPageActionsType =
+  | ReturnType<typeof setUser>
+  | ReturnType<typeof setAuth>;

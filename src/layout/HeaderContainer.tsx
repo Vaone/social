@@ -1,15 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { AuthAPI, T_AuthResponseData } from "../api/Api";
-import { AuthUserType, setUser, setAuth } from "../redux/auth-reducer";
-import { RootState } from "../redux/redux-store";
+import { T_AuthResponseData } from "../api/Api";
+import { AuthUserType, setUser, setAuth, getAuthTC } from "../redux/auth-reducer";
+import { RootState} from "../redux/redux-store";
 import Header from "./Header";
 
 class HeadersApiContainer extends React.Component<HeadersPropsType> {
-  async componentDidMount() {
-    const res = await AuthAPI.getAuth()
-    this.props.setUser(res.data)
-    this.props.setAuth(true)
+  componentDidMount() {
+    this.props.getAuthTC()
   }
 
   render() {
@@ -21,7 +19,7 @@ const mapStateProps = (state: RootState):MapStatePropsType => ({
   user: state.authUser
 })
 
-const HeadersContainer = connect(mapStateProps, {setUser, setAuth})(HeadersApiContainer)
+const HeadersContainer = connect(mapStateProps, {setUser, setAuth, getAuthTC})(HeadersApiContainer)
 
 export default HeadersContainer
 
@@ -31,5 +29,6 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
   setUser: (user: T_AuthResponseData)=>void
   setAuth: (isAuth: boolean)=>void
+  getAuthTC: ()=>void
 }
 type HeadersPropsType = MapStatePropsType & MapDispatchPropsType

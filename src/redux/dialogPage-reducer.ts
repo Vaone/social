@@ -1,27 +1,10 @@
 import { v1 } from "uuid";
 
-export type MessageType = {
-  messageId: string;
-  text: string;
-  time: string;
-  sender: string;
-};
-export type MessagesListType = {
-  [messageId: string]: MessageType[];
-};
-export type FriendType = {
-  friendId: string, 
-  name: string,
-}
-export type DialogPageType = {
-  messageList: MessagesListType,
-  friendList: FriendType[]
-}
-export type DialogActionTypes = ReturnType<typeof sendNewMessageAC>
-
+//variables
 const SEND_NEW_MESSAGE = 'SEND-NEW-MESSAGE'
 
-export const sendNewMessageAC = (newMessage: string, friendId: string) => ({type: SEND_NEW_MESSAGE, payload:{text:newMessage, friendId: friendId}} as const)
+//actions
+export const sendNewMessage = (newMessage: string, friendId: string) => ({type: SEND_NEW_MESSAGE, payload:{text:newMessage, friendId: friendId}} as const)
 
 const initialState: DialogPageType = {
   messageList: {
@@ -47,7 +30,7 @@ const initialState: DialogPageType = {
   ],
 }
 
-export const dialogPageReducer = (state=initialState, action: DialogActionTypes) => {
+export const dialogPageReducer = (state=initialState, action: DialogActionsType) => {
   switch (action.type) {
     case SEND_NEW_MESSAGE:
       const time = new Date()
@@ -59,3 +42,23 @@ export const dialogPageReducer = (state=initialState, action: DialogActionTypes)
       return state
   }
 }
+
+// types
+export type MessageType = {
+  messageId: string;
+  text: string;
+  time: string;
+  sender: string;
+};
+export type MessagesListType = {
+  [messageId: string]: MessageType[];
+};
+export type FriendType = {
+  friendId: string, 
+  name: string,
+}
+export type DialogPageType = {
+  messageList: MessagesListType,
+  friendList: FriendType[]
+}
+export type DialogActionsType = ReturnType<typeof sendNewMessage>
