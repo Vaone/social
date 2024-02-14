@@ -7,6 +7,7 @@ import DialogsContainer from "./pages/Dialogs/DialogsContainer";
 import UsersContainer from "./pages/Users/UsersContainer";
 import ProfileContainer from "./pages/Profile/ProfileContainer";
 import HeadersContainer from "./layout/HeaderContainer";
+import Login from "./pages/Login/Login";
 
 const App: FC = () => {
   return (
@@ -28,6 +29,10 @@ const App: FC = () => {
               <Route
                 path="/users"
                 render={()=><UsersContainer />}  
+              />
+              <Route
+                path="/login"
+                render={()=><Login />}  
               />
             </Main>
           </StyledMain>

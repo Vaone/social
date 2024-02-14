@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { redirectAuth } from "../../component/AuthRedirect";
 import { RootState } from "../../redux/redux-store";
 import {
   onPageChange,
@@ -33,7 +34,7 @@ class UsersApiContainer extends React.Component<UsersCPropsType> {
     } = this.props;
 
     const pages = Math.ceil(usersCount / pageSize);
-
+    
     return (
       <Users
         isLoading={isLoading}
@@ -59,11 +60,13 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const UsersContainer = connect(mapStateToProps, {
+const UsersConnected = connect(mapStateToProps, {
   onPageChange,
   getUsersTC,
   toggleFollowTC
 })(UsersApiContainer);
+
+const UsersContainer = redirectAuth(UsersConnected)
 
 export default UsersContainer;
 

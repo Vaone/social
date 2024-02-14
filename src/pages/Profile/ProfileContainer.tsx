@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import Loader from "../../component/Loader";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { T_Profile } from "../../api/Api";
+import { redirectAuth } from "../../component/AuthRedirect";
 
 class ProfileApiContainer extends React.Component<ProfilePropsType> {
   componentDidMount() {
@@ -32,10 +33,9 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => ({
 // throw through HOC:withRouter
 const ProfileWithRouter = withRouter(ProfileApiContainer);
 // api-container throw through bll-container
-const ProfileContainer = connect(mapStateToProps, { getProfileTC })(
-  ProfileWithRouter
-);
-
+const ProfileReduxConnected = connect(mapStateToProps, { getProfileTC })(ProfileWithRouter);
+// throw through HOC: redirect if not authentificated
+const ProfileContainer = redirectAuth(ProfileReduxConnected)
 export default ProfileContainer;
 
 type ParamsType = {

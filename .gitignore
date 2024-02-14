@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.gitignore
 
 # testing
 /coverage
@@ -24,3 +25,4 @@ yarn-error.log*
 
 .idea
 i.html
+1.js
