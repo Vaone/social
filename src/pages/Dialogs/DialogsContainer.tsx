@@ -1,4 +1,6 @@
+import React from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { redirectAuth } from "../../component/AuthRedirect";
 import { FriendType, MessagesListType, sendNewMessage } from "../../redux/dialogPage-reducer";
 import { RootState } from "../../redux/redux-store";
@@ -11,9 +13,10 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const DialogsConnected = connect(mapStateToProps, {sendNewMessage})(Dialogs);
-
-const DialogsContainer = redirectAuth(DialogsConnected)
+const DialogsContainer = compose<React.ComponentType>(
+  connect(mapStateToProps, {sendNewMessage}),
+  redirectAuth
+)(Dialogs)
 
 export default DialogsContainer;
 
