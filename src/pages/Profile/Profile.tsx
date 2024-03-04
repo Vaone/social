@@ -3,14 +3,18 @@ import { UserOutlined } from "@ant-design/icons";
 import React, { memo } from "react";
 import { MyPostsContainer } from "./MyPosts/MyPostsContainer";
 import styled from "styled-components";
-import { T_Profile } from "../../api/Api";
+import { T_Profile } from "../../api/ProfileAPI";
+import ProfileStatus from "./Status/ProfileStatus";
 
 type ProfilePropsType = {
   profile: T_Profile;
+  status: string;
+  updateStatus: (status: string)=>void
 };
+
 class Profile extends React.Component<ProfilePropsType> {
   render(): React.ReactNode {
-    const { profile } = this.props;
+    const { profile, status, updateStatus } = this.props;
 
     return (
       <div>
@@ -26,6 +30,7 @@ class Profile extends React.Component<ProfilePropsType> {
             <h2>{profile.fullName}</h2>
             <p>{profile.lookingForAJobDescription}</p>
             <Divider />
+            <ProfileStatus status={status} updateStatus={updateStatus}/>
             <h3>Contact Information</h3>
             <StyledContactList>
               {Object.entries(profile.contacts).map(([key, value]) => (

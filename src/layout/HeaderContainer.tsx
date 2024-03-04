@@ -11,23 +11,23 @@ import {
 import { RootState } from "../redux/redux-store";
 import Header from "./Header";
 
-class HeadersApiContainer extends React.Component<HeadersPropsType> {
-  componentDidMount() {
-    this.props.getAuthTC();
-  }
+// class HeadersApiContainer extends React.Component<HeadersPropsType> {
+//   componentDidMount() {
+//     this.props.getAuthTC();
+//   }
 
-  render() {
-    return <Header setAuth={this.props.setAuth} authUser={this.props.user} />;
-  }
-}
+//   render() {
+//     return <Header setAuth={this.props.setAuth} authUser={this.props.user} />;
+//   }
+// }
 
 const mapStateProps = (state: RootState): MapStatePropsType => ({
   user: state.authUser,
 });
 
 const HeadersContainer = compose<React.ComponentType>(
-  connect(mapStateProps, { setUser, setAuth, getAuthTC })
-)(HeadersApiContainer);
+  connect(mapStateProps, { setUser, setAuth })
+)(Header);
 
 export default HeadersContainer
 
@@ -37,6 +37,6 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
   setUser: (user: T_AuthResponseData) => void;
   setAuth: (isAuth: boolean) => void;
-  getAuthTC: () => void;
+  // getAuthTC: () => void;
 };
-type HeadersPropsType = MapStatePropsType & MapDispatchPropsType;
+export type HeadersPropsType = MapStatePropsType & MapDispatchPropsType;

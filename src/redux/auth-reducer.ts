@@ -1,9 +1,10 @@
+import { toggleInitialization } from './common-reducer';
 import { AppThunk } from "./redux-store";
 import { AuthAPI, T_AuthResponseData } from "../api/Api";
 import { Dispatch } from "redux";
 
 const initialState: AuthUserType = {
-  id: 2,
+  id: 0,
   email: "",
   login: "",
   isAuth: false,
@@ -34,10 +35,16 @@ export const authReducer = (
 };
 
 // thunks
-export const getAuthTC = ():AppThunk => async (dispatch: Dispatch) => {
-  const res = await AuthAPI.getAuth();
-  dispatch(setUser(res.data));
-  dispatch(setAuth(true));
+export const getAuthTC = (): AppThunk => async (dispatch: Dispatch) => {
+  try {
+    const res = await AuthAPI.getAuth();
+    dispatch(setUser(res.data));
+    dispatch(setAuth(true));
+  } catch (error) {
+    console.warn(error);
+  } finally {
+    dispatch(toggleInitialization(true))
+  }
 };
 
 //types

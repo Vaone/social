@@ -1,26 +1,20 @@
 import { Button } from "antd";
 import React from "react";
 import styled from "styled-components";
-import { AuthUserType } from "../redux/auth-reducer";
+import { HeadersPropsType } from "./HeaderContainer";
 
-type HeaderProps = {
-  authUser: AuthUserType;
-  setAuth: (isAuth: boolean) => void;
-};
-
-class Header extends React.Component<HeaderProps> {
+class Header extends React.Component<HeadersPropsType> {
   render() {
-    const { email, id, isAuth } = this.props.authUser;
-    const setAuth = this.props.setAuth;
+    const { isAuth } = this.props.user;
 
     return (
       <StyledHeader>
         <div>Header</div>
         <div>
           {isAuth ? (
-            <Button type="link" onClick={() => setAuth(false)}>Выход</Button>
+            <Button type="link" onClick={() => this.props.setAuth(false)}>Выход</Button>
           ) : (
-            <Button type="link" onClick={() => setAuth(true)}>Login</Button>
+            <Button type="link" onClick={() => this.props.setAuth(true)}>Login</Button>
           )}
         </div>
       </StyledHeader>

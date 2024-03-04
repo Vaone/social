@@ -1,12 +1,13 @@
 import { Dispatch } from "redux";
-import { ProfileAPI, T_Profile } from "../api/Api";
+import { ProfileAPI, T_Profile } from "../api/ProfileAPI";
 import { toggleLoader } from "./common-reducer";
 import { AppThunk } from "./redux-store";
 
 // various
 export const ADD_POST = "ADD-POST";
-export const CHANGE_POST_INPUT = "CHANGE-POST-INPUT";
+export const CHANGE_POST_INPUT = "CHANGE-POST_INPUT";
 export const SET_PROFILE = "SET-PROFILE";
+export const SET_PROFILE_STATUS = "SET-SET_PROFILE_STATUS";
 
 // actions
 export const addPost = () => ({ type: ADD_POST } as const);
@@ -14,6 +15,8 @@ export const changePost = (text: string) =>
   ({ type: CHANGE_POST_INPUT, payload: { text: text } } as const);
 export const setProfile = (profile: T_Profile) =>
   ({ type: SET_PROFILE, payload: { profile } } as const);
+export const setProfileStatus = (status: string) =>
+  ({ type: SET_PROFILE_STATUS, payload: { status } } as const);
 
 const initialState: ProfilePageType = {
   posts: [
@@ -24,7 +27,7 @@ const initialState: ProfilePageType = {
   ],
   newPostText: "",
   profile: {
-    userId: 123,
+    userId: 1234,
     lookingForAJob: false,
     lookingForAJobDescription: "",
     fullName: "",
@@ -43,6 +46,7 @@ const initialState: ProfilePageType = {
       large: "",
     },
   },
+  status: "",
 };
 
 export const profilePageReducer = (
@@ -64,6 +68,9 @@ export const profilePageReducer = (
     case SET_PROFILE: {
       return { ...state, profile: action.payload.profile };
     }
+    case SET_PROFILE_STATUS: {
+      return { ...state, status: action.payload.status };
+    }
     default: {
       return state;
     }
@@ -79,6 +86,26 @@ export const getProfileTC =
     dispatch(setProfile(data));
     dispatch(toggleLoader(false));
   };
+export const getProfileStatusTC =
+  (userId: number): AppThunk =>
+  async (dispatch: Dispatch) => {
+    dispatch(toggleLoader(true));
+    const status = await ProfileAPI.getProfileStatus(userId);
+    status
+      ? dispatch(setProfileStatus(status))
+      : dispatch(setProfileStatus(""));
+    dispatch(toggleLoader(false));
+  };
+export const upadteStatusFieldTC =
+  (status: string): AppThunk =>
+  async (dispatch: Dispatch) => {
+    dispatch(toggleLoader(true));
+    const res = await ProfileAPI.updateStatusField(status);
+    if (res.resultCode === 0) {
+      dispatch(setProfileStatus(status))
+      dispatch(toggleLoader(false));
+    }
+  };
 
 // types
 export type PostType = {
@@ -90,8 +117,10 @@ export type ProfilePageType = {
   posts: PostType[];
   newPostText: string;
   profile: T_Profile;
+  status: string;
 };
 export type ProfilePageActionsType =
   | ReturnType<typeof addPost>
   | ReturnType<typeof changePost>
-  | ReturnType<typeof setProfile>;
+  | ReturnType<typeof setProfile>
+  | ReturnType<typeof setProfileStatus>;
