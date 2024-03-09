@@ -1,7 +1,9 @@
-import { Button, Checkbox, Form, Input } from "antd";
-import React, { memo } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import styled from "styled-components";
+import { Button, Checkbox, Form, Input } from 'antd';
+import React, { memo } from 'react';
+import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
+import { loginTC } from '../../redux/auth-reducer';
+import { useAppDispatch, useAppSelector } from '../../redux/redux-store';
 
 type Inputs = {
   email: string;
@@ -10,12 +12,17 @@ type Inputs = {
 };
 
 const LoginComp: React.FC = () => {
+  const isLogged = useAppSelector((state) => state.authUser.isAuth);
   const [form] = Form.useForm();
-  console.log('render');
-  
-  const onFinish = (values: any) => {
-    console.log(values);
+  const dispatch = useAppDispatch();
+
+  const onFinish = (values: Inputs) => {
+    dispatch(loginTC(values.email, values.password, values.remember));
   };
+
+  if (isLogged) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Wrapper>
@@ -29,25 +36,17 @@ const LoginComp: React.FC = () => {
         onFinish={onFinish}
         autoComplete="off"
       >
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ required: true, message: "Please input your email!" }]}
-        >
+        <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
           <Input />
         </Form.Item>
         <Form.Item
           label="Password"
-          name="passsword"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <Input.Password />
         </Form.Item>
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{ offset: 8, span: 16 }}
-        >
+        <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 

@@ -1,35 +1,34 @@
-import React, { ChangeEvent } from "react";
-import styled from "styled-components";
+import React, { ChangeEvent } from 'react';
+import styled from 'styled-components';
 
 type ProfileStatusPropsType = {
   status: string;
-  updateStatus: (status: string)=>void
+  updateStatus: (status: string) => void;
 };
 
 class ProfileStatus extends React.Component<ProfileStatusPropsType> {
   state = {
     editMode: false,
-    status: this.props.status,
+    status: this.props.status
   };
 
   componentDidUpdate(prevProps: ProfileStatusPropsType) {
-    debugger
     if (prevProps.status !== this.props.status) {
       this.setState({
         status: this.props.status
-      })
+      });
     }
   }
 
   activateEditMode() {
     this.setState({
-      editMode: true,
+      editMode: true
     });
   }
 
   deactivateEditMode() {
     this.setState({
-      editMode: false,
+      editMode: false
     });
     this.props.updateStatus(this.state.status);
   }
@@ -43,9 +42,7 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
       <div>
         {!this.state.editMode ? (
           <div>
-            <EditableSpan onDoubleClick={this.activateEditMode.bind(this)}>
-              {this.props.status}
-            </EditableSpan>
+            <EditableSpan onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status}</EditableSpan>
             {/* <button onClick={this.activateEditMode.bind(this)}>open</button> */}
           </div>
         ) : (
@@ -56,7 +53,6 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
               onBlur={this.deactivateEditMode.bind(this)}
               onChange={this.statusChangeHandler.bind(this)}
             />
-            
           </div>
         )}
       </div>

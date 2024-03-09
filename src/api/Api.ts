@@ -22,6 +22,15 @@ export const AuthAPI = {
     instance
       .get<Response<T_AuthResponseData>>("auth/me")
       .then((res) => res.data),
+  login: (email: string, password: string, rememberMe: boolean = false) =>
+    instance
+      .post<Response<{ userId: number }>>("auth/login", {
+        email,
+        password,
+        rememberMe,
+      })
+      .then((res) => res.data),
+  logout: () => instance.delete<Response>("auth/login").then((res) => res.data),
 };
 
 type ResponseGetUsers = {
