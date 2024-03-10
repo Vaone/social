@@ -1,6 +1,7 @@
-import { toggleInitialization } from './common-reducer';
+import { toggleInitialization, setError } from './common-reducer';
 import { AppThunk } from './redux-store';
 import { AuthAPI, T_AuthResponseData } from '../api/Api';
+import axios from 'axios';
 
 const initialState: AuthUserType = {
   id: 0,
@@ -47,9 +48,11 @@ export const loginTC =
       const res = await AuthAPI.login(email, password, rememberMe);
       if (res.resultCode === 0) {
         dispatch(getAuthTC());
+      } else {
+        dispatch(setError(res.messages[0]));
       }
-    } catch (error) {
-      console.warn(error);
+    } catch (e: any) {
+      console.warn(e);
     }
   };
 export const logoutTC = (): AppThunk => async (dispatch) => {
@@ -72,3 +75,4 @@ export type AuthUserType = {
   isAuth: boolean;
 };
 type UsersPageActionsType = ReturnType<typeof setUser> | ReturnType<typeof setAuth>;
+type T_ResponseError = {};

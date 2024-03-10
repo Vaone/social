@@ -1,8 +1,9 @@
-import { Button, Checkbox, Form, Input } from 'antd';
-import React, { memo } from 'react';
+import { Button, Checkbox, Form, Input, message } from 'antd';
+import React, { memo, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { loginTC } from '../../redux/auth-reducer';
+import { setError } from '../../redux/common-reducer';
 import { useAppDispatch, useAppSelector } from '../../redux/redux-store';
 
 type Inputs = {
@@ -13,8 +14,18 @@ type Inputs = {
 
 const LoginComp: React.FC = () => {
   const isLogged = useAppSelector((state) => state.authUser.isAuth);
+  const reqErr = useAppSelector((state) => state.anyPage.error);
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (reqErr) {
+      message.error(reqErr);
+      setTimeout(() => {
+        dispatch(setError(null));
+      }, 3000);
+    }
+  }, [reqErr]);
 
   const onFinish = (values: Inputs) => {
     dispatch(loginTC(values.email, values.password, values.remember));
